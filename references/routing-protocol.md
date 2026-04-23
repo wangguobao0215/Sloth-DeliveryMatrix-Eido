@@ -87,8 +87,8 @@ route:
 
 | 用户输入 | Layer | 命中路由 | 说明 |
 |---------|-------|---------|------|
-| 「生成本周周报」 | L1-关键词 | rt_weekly_report | 精确匹配「周报」 |
-| 「看下近三个迭代的燃尽图趋势」 | L2-正则 | rt_burndown_analysis | 匹配 `燃尽图.*趋势` |
-| 「最近团队氛围不太好，怎么处理」 | L3-语义 | rt_team_health | LLM 识别为团队健康度问题 |
-| 「这个需求能不能做」 | L3-语义 | rt_feasibility_check | LLM 结合项目上下文判断为可行性评估 |
+| 「生成本周周报」 | L1-关键词 | R01 weekly_report | 精确匹配「周报」 |
+| 「看下近三个迭代的燃尽图趋势」 | L2-正则 | R04 progress_tracking | 匹配 `燃尽图.*趋势`，归属进度追踪 |
+| 「评估一下项目风险」 | L1-关键词 | R03 risk_assessment | 精确匹配「风险」 |
+| 「整理一下今天的会议纪要」 | L1-关键词 | R02 meeting_minutes | 精确匹配「会议纪要」 |
 | 「帮我订个会议室」 | Fallback | no_match | 超出 DeliveryMatrix 能力范围 |
