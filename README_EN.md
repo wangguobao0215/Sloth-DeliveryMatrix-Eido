@@ -52,6 +52,10 @@ Example commands:
 - "Write a status update email for the client"
 - "Prepare materials for tomorrow's project review" (composite orchestration)
 
+## Documentation
+
+- [User Guide](references/user-guide.md) — Complete usage guide, best practices, and FAQ
+
 ## Directory Structure
 
 ```
