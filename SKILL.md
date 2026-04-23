@@ -1,5 +1,5 @@
 ---
-name: Sloth-DeliveryMatrix-Eido
+name: sloth-deliverymatrix-eido
 version: 1.0.0
 description: >-
   AI-native delivery intelligence agent for software project teams. Orchestrates
