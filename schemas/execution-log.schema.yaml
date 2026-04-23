@@ -1,0 +1,98 @@
+# execution-log.schema.yaml
+# Schema definition for Sloth-DeliveryMatrix-Eido execution log entries.
+# Each orchestration action produces one log entry conforming to this schema.
+
+timestamp:
+  type: string
+  format: datetime
+  required: true
+  description: ISO-8601 timestamp when the execution occurred
+
+session_id:
+  type: string
+  required: true
+  description: Current chat/session identifier
+
+orchestration_id:
+  type: string
+  required: true
+  description: Unique identifier for this orchestration run
+
+role:
+  type: string
+  required: true
+  description: The role that initiated the execution (e.g., delivery-manager)
+
+routing:
+  type: object
+  required: true
+  properties:
+    user_input_summary:
+      type: string
+      required: true
+      description: Brief summary of what the user requested
+    matched_route:
+      type: string
+      required: true
+      description: The route ID that was matched
+    match_layer:
+      type: string
+      enum: [keyword, pattern, semantic, composite, fallback]
+      required: true
+      description: Which matching layer resolved the route
+    confidence:
+      type: number
+      minimum: 0.0
+      maximum: 1.0
+      required: true
+      description: Confidence score of the route match
+
+context:
+  type: object
+  properties:
+    project_id:
+      type: string
+      description: Active project ID at time of execution
+    context_completeness:
+      type: number
+      minimum: 0.0
+      maximum: 1.0
+      description: How complete the project context was (0-1)
+    missing_fields:
+      type: array
+      items:
+        type: string
+      description: List of project state fields that were missing or incomplete
+
+execution:
+  type: object
+  required: true
+  properties:
+    target_skill:
+      type: string
+      required: true
+      description: The skill that was invoked
+    status:
+      type: string
+      enum: [success, partial, failed, skipped]
+      required: true
+      description: Outcome of the execution
+    execution_time_ms:
+      type: integer
+      minimum: 0
+      description: Wall-clock execution time in milliseconds
+    error_message:
+      type: string
+      description: Error details if status is failed
+
+quality:
+  type: object
+  properties:
+    self_check_passed:
+      type: boolean
+      description: Whether the output passed self-check validation
+    self_check_issues:
+      type: array
+      items:
+        type: string
+      description: List of issues found during self-check

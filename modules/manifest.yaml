@@ -1,0 +1,236 @@
+# modules/manifest.yaml
+# Module registry and I/O contracts for Sloth-DeliveryMatrix-Eido
+# This file is the single source of truth for module metadata.
+
+modules:
+
+  # --- Role Commanders ---
+  director-commander:
+    type: role
+    file: director-commander.md
+    description: 交付总监角色模块 — 跨项目治理、资源池调度、战略对齐
+    input:
+      required:
+        - field: active_projects
+          type: "list[project_state]"
+          description: 所有活跃项目的状态文件列表
+      optional:
+        - field: time_range
+          type: string
+          description: 查询时间范围（如"本周""本月"）
+    output:
+      format: markdown
+      sections: [portfolio_dashboard, risk_summary, resource_heatmap, decision_items]
+      state_updates: [global.yaml]
+
+  consultant-commander:
+    type: role
+    file: consultant-commander.md
+    description: 顾问角色模块 — 方法论指导、过程改进、质量审计
+    input:
+      required:
+        - field: active_project
+          type: project_state
+          description: 当前项目状态
+      optional:
+        - field: audit_scope
+          type: string
+          description: 审计范围（process/quality/methodology）
+    output:
+      format: markdown
+      sections: [methodology_assessment, improvement_plan, quality_report]
+      state_updates: ["projects/{project_id}.yaml"]
+
+  pm-commander-extended:
+    type: role
+    file: pm-commander-extended.md
+    description: PM扩展模块 — 多项目管理、干系人映射、升级处理
+    input:
+      required:
+        - field: active_project
+          type: project_state
+      optional:
+        - field: escalation_context
+          type: string
+    output:
+      format: markdown
+      state_updates: ["projects/{project_id}.yaml"]
+
+  # --- Atomic Capabilities ---
+  doc-generator:
+    type: capability
+    route_id: R01
+    file: doc-generator.md
+    description: 文档生成引擎 — 周报、月报、SRS、验收报告等
+    input:
+      required:
+        - field: active_project
+          type: project_state
+        - field: doc_type
+          type: string
+          enum: [weekly_report, brd, srs, test_report, acceptance_report, review_presentation, director_weekly, change_request]
+      optional:
+        - field: raw_content
+          type: string
+          description: 用户提供的原始内容/素材
+        - field: template_override
+          type: string
+          description: 指定模板路径覆盖自动选择
+    output:
+      format: markdown
+      template_dir: "templates/{industry}/"
+      fallback_template_dir: "templates/_base/"
+      state_updates: ["projects/{project_id}.yaml -> documents[]"]
+
+  meeting-minutes:
+    type: capability
+    route_id: R02
+    file: meeting-minutes.md
+    description: 会议纪要引擎 — 从转写/笔记中提取决议、待办、风险
+    input:
+      required:
+        - field: active_project
+          type: project_state
+        - field: raw_input
+          type: string
+          description: 会议录音转写文本、笔记或聊天记录
+      optional:
+        - field: meeting_type
+          type: string
+          enum: [standup, review, retrospective, client, internal]
+    output:
+      format: markdown
+      sections: [meeting_info, decisions, action_items, risk_signals, next_steps]
+      state_updates: ["projects/{project_id}.yaml -> weekly_events[]"]
+
+  risk-radar:
+    type: capability
+    route_id: R03
+    file: risk-radar.md
+    description: 风险雷达 — 识别、评估、登记、追踪项目风险
+    input:
+      required:
+        - field: active_project
+          type: project_state
+      optional:
+        - field: risk_description
+          type: string
+          description: 用户描述的风险信息
+        - field: scan_mode
+          type: string
+          enum: [manual, auto_scan, cross_project]
+    output:
+      format: markdown + table
+      sections: [risk_register, risk_matrix, mitigation_plan]
+      state_updates: ["projects/{project_id}.yaml -> risks[]"]
+
+  progress-tracker:
+    type: capability
+    route_id: R04
+    file: progress-tracker.md
+    description: 进度追踪器 — 里程碑管理、完成率、延期预警
+    input:
+      required:
+        - field: active_project
+          type: project_state
+      optional:
+        - field: update_data
+          type: string
+          description: 进度更新信息
+    output:
+      format: markdown + table
+      sections: [milestone_status, completion_chart, delay_alerts, spi_analysis]
+      state_updates: ["projects/{project_id}.yaml -> timeline.milestones[]"]
+
+  resource-coordinator:
+    type: capability
+    route_id: R05
+    file: resource-coordinator.md
+    description: 资源协调器 — 排期、工时、冲突检测、调配建议
+    input:
+      required:
+        - field: active_project
+          type: project_state
+      optional:
+        - field: coordination_request
+          type: string
+    output:
+      format: markdown + table
+      sections: [workload_heatmap, conflict_alerts, reallocation_suggestions]
+      state_updates: ["projects/{project_id}.yaml -> team.members[]"]
+
+  client-communicator:
+    type: capability
+    route_id: R06
+    file: client-communicator.md
+    description: 客户沟通助手 — 汇报材料、邮件草稿、问题答复
+    input:
+      required:
+        - field: active_project
+          type: project_state
+        - field: comm_type
+          type: string
+          enum: [status_update, issue_response, meeting_prep, escalation, progress_report, change_notification, thank_you]
+      optional:
+        - field: context
+          type: string
+    output:
+      format: text/markdown
+      state_updates: []
+
+  requirement-analyzer:
+    type: capability
+    route_id: R07
+    file: requirement-analyzer.md
+    description: 需求分析器 — 整理、拆解、变更评估、跟踪矩阵
+    input:
+      required:
+        - field: active_project
+          type: project_state
+      optional:
+        - field: requirement_input
+          type: string
+          description: 需求文档/描述/变更请求
+    output:
+      format: markdown + table
+      sections: [requirement_list, priority_matrix, change_impact, traceability_matrix]
+      state_updates: ["projects/{project_id}.yaml"]
+
+  acceptance-delivery:
+    type: capability
+    route_id: R08
+    file: acceptance-delivery.md
+    description: 验收交付管家 — 交付物清单、检查表、上线计划
+    input:
+      required:
+        - field: active_project
+          type: project_state
+      optional:
+        - field: delivery_phase
+          type: string
+          enum: [preparation, review, execution, closure]
+    output:
+      format: markdown + checklist
+      sections: [deliverable_checklist, acceptance_criteria, deployment_plan, sign_off]
+      state_updates: ["projects/{project_id}.yaml -> documents[]"]
+
+  data-collector:
+    type: capability
+    route_id: R09
+    file: data-collector.md
+    description: 数据采集器 — 工时汇总、质量指标、健康度看板
+    input:
+      required:
+        - field: active_project
+          type: project_state
+      optional:
+        - field: data_source
+          type: string
+          description: 数据来源（手动输入/文件导入/API）
+        - field: metric_type
+          type: string
+          enum: [workload, quality, schedule, cost, all]
+    output:
+      format: markdown + table
+      sections: [data_summary, health_dashboard, trend_analysis]
+      state_updates: ["projects/{project_id}.yaml -> weekly_events[]"]

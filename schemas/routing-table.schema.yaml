@@ -1,0 +1,159 @@
+# routing-table.schema.yaml
+# Schema definition for Sloth-DeliveryMatrix-Eido routing table.
+# Defines how user intents are matched and routed to target skills.
+
+metadata:
+  type: object
+  required: true
+  properties:
+    role:
+      type: string
+      required: true
+      description: The role this routing table serves (e.g., delivery-manager)
+    version:
+      type: string
+      required: true
+      description: Routing table version
+
+defaults:
+  type: object
+  properties:
+    require_project_context:
+      type: boolean
+      default: true
+      description: Whether routes require an active project context by default
+    fallback_action:
+      type: string
+      default: prompt_user
+      description: Default action when no route matches
+
+routes:
+  type: array
+  required: true
+  items:
+    type: object
+    properties:
+      id:
+        type: string
+        required: true
+        description: Unique route identifier
+      name:
+        type: string
+        required: true
+        description: Human-readable route name
+      target_skill:
+        type: string
+        required: true
+        description: Target skill to invoke (e.g., sloth-deckbuilder-eido)
+      triggers:
+        type: object
+        required: true
+        properties:
+          keywords:
+            type: array
+            items:
+              type: string
+            description: Keywords that activate this route
+          patterns:
+            type: array
+            items:
+              type: string
+            description: Regex patterns for intent matching
+      context_injection:
+        type: object
+        description: Data to inject from project state into skill context
+        properties:
+          fields:
+            type: array
+            items:
+              type: string
+            description: Project state fields to inject
+          format:
+            type: string
+            enum: [yaml, json, markdown]
+            default: yaml
+      parameters:
+        type: object
+        description: Additional parameters passed to the target skill
+        additionalProperties: true
+
+composite_routes:
+  type: array
+  items:
+    type: object
+    properties:
+      id:
+        type: string
+        required: true
+      name:
+        type: string
+        required: true
+      triggers:
+        type: object
+        properties:
+          keywords:
+            type: array
+            items:
+              type: string
+          patterns:
+            type: array
+            items:
+              type: string
+      orchestration:
+        type: object
+        required: true
+        properties:
+          mode:
+            type: string
+            enum: [sequential, parallel, conditional]
+            required: true
+            description: How to execute the steps
+          steps:
+            type: array
+            required: true
+            items:
+              type: object
+              properties:
+                route_id:
+                  type: string
+                  description: Reference to a route.id
+                condition:
+                  type: string
+                  description: Condition expression for conditional mode
+                order:
+                  type: integer
+          merge_strategy:
+            type: string
+            enum: [concatenate, summarize, structured]
+            default: concatenate
+            description: How to combine results from multiple steps
+
+fallback:
+  type: object
+  properties:
+    no_match:
+      type: object
+      properties:
+        action:
+          type: string
+          enum: [prompt_user, suggest_routes, pass_through]
+        message:
+          type: string
+    ambiguous_match:
+      type: object
+      properties:
+        action:
+          type: string
+          enum: [ask_clarification, use_highest_confidence, use_first_match]
+        message:
+          type: string
+    skill_unavailable:
+      type: object
+      properties:
+        action:
+          type: string
+          enum: [notify_user, use_fallback_skill, queue_request]
+        fallback_skill:
+          type: string
+        message:
+          type: string

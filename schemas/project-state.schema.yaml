@@ -1,0 +1,261 @@
+# project-state.schema.yaml
+# Schema definition for Sloth-DeliveryMatrix-Eido project state files.
+# All project state YAML files MUST conform to this schema.
+
+_version:
+  type: string
+  required: true
+  description: Schema version identifier
+  example: "1.0"
+
+_last_modified_by:
+  type: string
+  required: true
+  description: Who last modified this state file (user or system)
+
+_last_modified_at:
+  type: string
+  format: datetime
+  required: true
+  description: ISO-8601 timestamp of last modification
+
+project:
+  type: object
+  required: true
+  properties:
+    id:
+      type: string
+      required: true
+      description: Unique project identifier
+    name:
+      type: string
+      required: true
+      description: Human-readable project name
+    code:
+      type: string
+      required: false
+      description: Short project code (e.g., PRJ-2024-001)
+    type:
+      type: string
+      enum: [saas, custom, hybrid]
+      required: true
+      description: Project delivery type
+    industry:
+      type: string
+      required: false
+      description: Client industry (e.g., government, finance, manufacturing)
+    status:
+      type: string
+      enum: [planning, in_progress, on_hold, completed, cancelled]
+      required: true
+      description: Current project status
+
+timeline:
+  type: object
+  required: true
+  properties:
+    start_date:
+      type: string
+      format: date
+      required: true
+    planned_end_date:
+      type: string
+      format: date
+      required: true
+    actual_end_date:
+      type: string
+      format: date
+      required: false
+    milestones:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: string
+            required: true
+          name:
+            type: string
+            required: true
+          start_date:
+            type: string
+            format: date
+          due_date:
+            type: string
+            format: date
+            required: true
+          status:
+            type: string
+            enum: [pending, in_progress, completed, delayed]
+          completion_pct:
+            type: number
+            minimum: 0
+            maximum: 100
+          critical:
+            type: boolean
+            default: false
+          deliverables:
+            type: array
+            items:
+              type: string
+
+team:
+  type: object
+  required: true
+  properties:
+    pm:
+      type: object
+      properties:
+        name:
+          type: string
+        contact:
+          type: string
+        allocation:
+          type: number
+    tech_lead:
+      type: object
+      properties:
+        name:
+          type: string
+        allocation:
+          type: number
+    members:
+      type: array
+      items:
+        type: object
+        properties:
+          name:
+            type: string
+            required: true
+          role:
+            type: string
+            required: true
+          allocation:
+            type: number
+            minimum: 0
+            maximum: 2.0
+            description: FTE allocation (1.0 = full-time)
+          skills:
+            type: array
+            items:
+              type: string
+
+client:
+  type: object
+  required: false
+  properties:
+    name:
+      type: string
+      required: true
+    primary_contact:
+      type: object
+      properties:
+        name:
+          type: string
+        title:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+    communication_channel:
+      type: string
+      description: Primary communication channel (e.g., WeChat group, DingTalk, email)
+
+risks:
+  type: array
+  items:
+    type: object
+    properties:
+      id:
+        type: string
+        required: true
+      description:
+        type: string
+        required: true
+      probability:
+        type: string
+        enum: [low, medium, high]
+        required: true
+      impact:
+        type: string
+        enum: [low, medium, high]
+        required: true
+      owner:
+        type: string
+      mitigation:
+        type: string
+      status:
+        type: string
+        enum: [open, mitigating, resolved, accepted]
+
+weekly_events:
+  type: array
+  items:
+    type: object
+    properties:
+      week:
+        type: string
+        description: Week identifier (e.g., 2024-W15)
+        required: true
+      highlights:
+        type: array
+        items:
+          type: string
+      issues:
+        type: array
+        items:
+          type: string
+      decisions:
+        type: array
+        items:
+          type: string
+      action_items:
+        type: array
+        items:
+          type: object
+          properties:
+            description:
+              type: string
+            owner:
+              type: string
+            deadline:
+              type: string
+              format: date
+            status:
+              type: string
+              enum: [pending, in_progress, done]
+
+documents:
+  type: array
+  items:
+    type: object
+    properties:
+      name:
+        type: string
+      type:
+        type: string
+        description: Document type (e.g., BRD, SRS, test-report)
+      version:
+        type: string
+      path:
+        type: string
+      last_updated:
+        type: string
+        format: date
+
+metadata:
+  type: object
+  properties:
+    tags:
+      type: array
+      items:
+        type: string
+    notes:
+      type: string
+    created_at:
+      type: string
+      format: datetime
+    source:
+      type: string
+      description: How this state was created (manual, imported, auto-detected)

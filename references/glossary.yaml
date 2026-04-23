@@ -1,0 +1,210 @@
+# 术语表 (Glossary)
+# DeliveryMatrix 交付管理领域术语定义
+
+# ============================================================
+# 一、常用交付术语（中英对照）
+# ============================================================
+delivery_terms:
+
+  - term_zh: 迭代
+    term_en: Sprint / Iteration
+    definition: 固定时长的开发周期，通常为 2 周，产出可交付增量。
+
+  - term_zh: 用户故事
+    term_en: User Story
+    definition: 从用户视角描述的功能需求，格式为「作为<角色>，我希望<功能>，以便<价值>」。
+
+  - term_zh: 验收标准
+    term_en: Acceptance Criteria
+    definition: 判定用户故事是否完成的具体条件，通常采用 Given-When-Then 格式。
+
+  - term_zh: 燃尽图
+    term_en: Burndown Chart
+    definition: 以图形方式展示剩余工作量随时间递减的趋势。
+
+  - term_zh: 需求基线
+    term_en: Requirements Baseline
+    definition: 经过评审确认的需求版本，后续变更需通过正式变更流程。
+
+  - term_zh: 里程碑
+    term_en: Milestone
+    definition: 项目中的关键时间节点，通常对应阶段性交付成果。
+
+  - term_zh: 变更控制
+    term_en: Change Control
+    definition: 对项目范围、进度、成本等变更进行评估和审批的正式流程。
+
+  - term_zh: 干系人
+    term_en: Stakeholder
+    definition: 对项目有影响或受项目影响的个人或组织。
+
+  - term_zh: 就绪定义
+    term_en: Definition of Ready (DoR)
+    definition: 用户故事进入迭代开发前必须满足的条件清单。
+
+  - term_zh: 完成定义
+    term_en: Definition of Done (DoD)
+    definition: 判定某项工作完全完成的标准清单，通常包含编码、测试、文档等维度。
+
+  - term_zh: 技术债务
+    term_en: Technical Debt
+    definition: 为快速交付而采取的非最优技术方案，需要后续投入时间修复。
+
+  - term_zh: 持续集成
+    term_en: Continuous Integration (CI)
+    definition: 开发人员频繁将代码合并到主干，并通过自动化构建和测试验证。
+
+# ============================================================
+# 二、状态枚举定义
+# ============================================================
+status_enums:
+
+  task_status:
+    - value: todo
+      label_zh: 待办
+      usage: 任务已创建但尚未开始，等待排期。
+
+    - value: in_progress
+      label_zh: 进行中
+      usage: 任务已有人认领并开始执行。
+
+    - value: in_review
+      label_zh: 评审中
+      usage: 开发完成，等待代码评审或测试验证。
+
+    - value: done
+      label_zh: 已完成
+      usage: 任务通过验证，迭代内标记为完成。与 completed 含义相同，done 用于敏捷场景。
+
+    - value: closed
+      label_zh: 已关闭
+      usage: 任务最终归档，不再变更。用于瀑布项目或缺陷管理，表示彻底结案。
+
+    - value: blocked
+      label_zh: 已阻塞
+      usage: 任务因外部依赖或技术问题暂停，需记录阻塞原因。
+
+  risk_status:
+    - value: identified
+      label_zh: 已识别
+      usage: 风险已发现并记录，尚未采取应对措施。
+
+    - value: mitigating
+      label_zh: 应对中
+      usage: 正在执行风险缓解措施。
+
+    - value: resolved
+      label_zh: 已解决
+      usage: 风险已消除或降至可接受水平。
+
+    - value: accepted
+      label_zh: 已接受
+      usage: 经评估后决定接受该风险，不做额外应对。
+
+    - value: escalated
+      label_zh: 已升级
+      usage: 风险超出 PM 处理能力，已上报至更高层级。
+
+# ============================================================
+# 三、缩写定义
+# ============================================================
+abbreviations:
+
+  - abbr: SPI
+    full_en: Schedule Performance Index
+    full_zh: 进度绩效指数
+    formula: "SPI = EV / PV"
+    note: "SPI > 1 表示进度超前，SPI < 1 表示进度落后"
+
+  - abbr: CPI
+    full_en: Cost Performance Index
+    full_zh: 成本绩效指数
+    formula: "CPI = EV / AC"
+    note: "CPI > 1 表示成本节约，CPI < 1 表示成本超支"
+
+  - abbr: EV
+    full_en: Earned Value
+    full_zh: 挣值
+    note: 已完成工作的预算价值
+
+  - abbr: PV
+    full_en: Planned Value
+    full_zh: 计划价值
+    note: 计划完成工作的预算价值
+
+  - abbr: AC
+    full_en: Actual Cost
+    full_zh: 实际成本
+    note: 已完成工作的实际花费
+
+  - abbr: SRS
+    full_en: Software Requirements Specification
+    full_zh: 软件需求规格说明书
+
+  - abbr: BRD
+    full_en: Business Requirements Document
+    full_zh: 业务需求文档
+
+  - abbr: UAT
+    full_en: User Acceptance Testing
+    full_zh: 用户验收测试
+
+  - abbr: SIT
+    full_en: System Integration Testing
+    full_zh: 系统集成测试
+
+  - abbr: WBS
+    full_en: Work Breakdown Structure
+    full_zh: 工作分解结构
+
+  - abbr: RACI
+    full_en: Responsible, Accountable, Consulted, Informed
+    full_zh: 责任分配矩阵
+    note: R=执行, A=负责, C=咨询, I=知会
+
+  - abbr: DoR
+    full_en: Definition of Ready
+    full_zh: 就绪定义
+
+  - abbr: DoD
+    full_en: Definition of Done
+    full_zh: 完成定义
+
+# ============================================================
+# 四、行业专用术语
+# ============================================================
+industry_terms:
+
+  saas:
+    - term_zh: 租户
+      term_en: Tenant
+      definition: SaaS 多租户架构中的独立客户实例。
+
+    - term_zh: 订阅续费率
+      term_en: Renewal Rate
+      definition: 客户在订阅到期后选择续费的比例，反映产品价值和客户满意度。
+
+    - term_zh: 功能开关
+      term_en: Feature Flag / Feature Toggle
+      definition: 通过配置控制功能可见性的技术手段，用于灰度发布和 A/B 测试。
+
+    - term_zh: 灰度发布
+      term_en: Canary Release
+      definition: 新版本先向少量用户开放，观察稳定后再全量发布。
+
+  government:
+    - term_zh: 等保
+      term_en: Classified Protection of Information Security
+      definition: 信息安全等级保护，政务系统通常要求等保二级或三级。
+
+    - term_zh: 信创
+      term_en: Information Technology Application Innovation
+      definition: 国产化替代，使用国产 CPU、操作系统、数据库、中间件。
+
+    - term_zh: 政务云
+      term_en: Government Cloud
+      definition: 面向政府机构的专属云计算平台，通常由指定运营商提供。
+
+    - term_zh: 数据目录
+      term_en: Data Catalog
+      definition: 政务数据资产的元数据索引，是数据共享和开放的基础设施。

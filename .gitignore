@@ -1,0 +1,30 @@
+# System files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Private files (never commit)
+*设计方案*.md
+*评审*.md
+*开发计划*.md
+*参考资料*.md
+*设计文档*.md
+*.private.*
+.env
+credentials.*
+
+# Temporary files
+*.tmp
+*.log
+output/
+
+# State data (user-specific, not to be shared)
+state/
+*.db

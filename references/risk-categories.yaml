@@ -1,0 +1,179 @@
+# 风险分类知识库 (Risk Categories)
+# 供 DeliveryMatrix 风险识别、评估和应对时参考
+
+categories:
+
+  - id: schedule_risk
+    name_zh: 进度风险
+    description: 项目交付时间偏离计划的风险
+    sub_items:
+      - name_zh: 关键路径延误
+        typical_signals:
+          - 关键任务完成率连续 2 天低于计划进度
+          - 前置依赖任务未按时交付
+        default_probability: 0.4
+        default_impact: high
+        recommended_mitigations:
+          - 识别并监控关键路径任务，每日跟踪
+          - 为关键任务预留 15%-20% 缓冲时间
+          - 提前准备替代方案和资源调配计划
+      - name_zh: 需求变更导致返工
+        typical_signals:
+          - 单迭代需求变更超过 3 项
+          - 甲方在开发阶段提出新需求
+        default_probability: 0.5
+        default_impact: medium
+        recommended_mitigations:
+          - 建立正式变更控制流程
+          - 需求冻结后的变更需评估影响并审批
+          - 保持需求文档与实现的追踪关系
+
+  - id: resource_risk
+    name_zh: 资源风险
+    description: 人力、设备或预算不足影响交付的风险
+    sub_items:
+      - name_zh: 关键人员流失
+        typical_signals:
+          - 核心成员提出离职或调岗
+          - 团队成员频繁请假
+        default_probability: 0.2
+        default_impact: high
+        recommended_mitigations:
+          - 关键岗位设置 AB 角备份
+          - 保持核心知识文档化
+          - 关注团队成员状态和满意度
+      - name_zh: 技能缺口
+        typical_signals:
+          - 特定技术任务无人能承接
+          - 代码评审发现大量低级问题
+        default_probability: 0.3
+        default_impact: medium
+        recommended_mitigations:
+          - 项目启动前做技能矩阵评估
+          - 安排技术培训或引入外部专家
+          - 复杂模块采用结对编程
+
+  - id: technical_risk
+    name_zh: 技术风险
+    description: 技术选型、架构设计或实现复杂度导致的风险
+    sub_items:
+      - name_zh: 技术方案不可行
+        typical_signals:
+          - POC 验证未通过
+          - 技术预研阶段频繁变更方案
+        default_probability: 0.2
+        default_impact: high
+        recommended_mitigations:
+          - 高风险技术方案提前做 POC 验证
+          - 准备技术备选方案
+          - 引入架构评审机制
+      - name_zh: 第三方依赖故障
+        typical_signals:
+          - 第三方接口频繁超时或返回错误
+          - 第三方文档与实际行为不一致
+        default_probability: 0.3
+        default_impact: medium
+        recommended_mitigations:
+          - 封装第三方接口，增加降级和重试机制
+          - 提前与第三方建立技术对接群
+          - 在合同中明确第三方 SLA 要求
+
+  - id: scope_risk
+    name_zh: 范围风险
+    description: 项目范围不明确或持续膨胀的风险
+    sub_items:
+      - name_zh: 范围蔓延
+        typical_signals:
+          - 需求数量持续增长但截止日期不变
+          - 频繁出现口头需求绕过正式流程
+        default_probability: 0.5
+        default_impact: high
+        recommended_mitigations:
+          - 建立需求基线，变更走正式审批流程
+          - 量化变更的工时影响并同步甲方
+          - 使用需求追踪矩阵管理范围
+      - name_zh: 验收标准模糊
+        typical_signals:
+          - 需求文档缺少明确的验收标准
+          - 甲方在验收时提出文档中未记载的要求
+        default_probability: 0.4
+        default_impact: medium
+        recommended_mitigations:
+          - 需求评审时逐项确认验收标准
+          - 使用用户故事的 Acceptance Criteria 格式
+          - 关键功能提前做甲方预验收
+
+  - id: quality_risk
+    name_zh: 质量风险
+    description: 交付物质量不达标的风险
+    sub_items:
+      - name_zh: 缺陷密度过高
+        typical_signals:
+          - 千行代码缺陷数 > 5
+          - 测试阶段发现大量设计缺陷
+        default_probability: 0.3
+        default_impact: high
+        recommended_mitigations:
+          - 加强代码评审覆盖率
+          - 建立单元测试覆盖率底线（建议 > 60%）
+          - 引入静态代码扫描工具
+      - name_zh: 性能不达标
+        typical_signals:
+          - 压测结果低于性能需求指标
+          - 生产环境出现响应超时投诉
+        default_probability: 0.3
+        default_impact: high
+        recommended_mitigations:
+          - 开发阶段同步做性能基准测试
+          - 识别性能瓶颈并建立性能预算
+          - 上线前完成完整压力测试
+
+  - id: communication_risk
+    name_zh: 沟通风险
+    description: 信息传递不畅或干系人协调困难的风险
+    sub_items:
+      - name_zh: 干系人期望偏差
+        typical_signals:
+          - 演示时甲方反馈与预期差异大
+          - 关键决策人长期不参与项目会议
+        default_probability: 0.4
+        default_impact: medium
+        recommended_mitigations:
+          - 建立定期汇报机制（周报/双周会）
+          - 关键里程碑前做干系人专项沟通
+          - 维护干系人画像和沟通策略
+      - name_zh: 跨团队协作低效
+        typical_signals:
+          - 跨团队接口问题反复出现
+          - 联调阶段沟通成本大幅上升
+        default_probability: 0.4
+        default_impact: medium
+        recommended_mitigations:
+          - 明确跨团队接口人和协作规范
+          - 定期召开跨团队同步会议
+          - 使用统一的接口文档和联调环境
+
+  - id: external_risk
+    name_zh: 外部风险
+    description: 项目团队无法直接控制的外部因素风险
+    sub_items:
+      - name_zh: 政策法规变化
+        typical_signals:
+          - 行业监管政策调整（如数据安全法、等保要求升级）
+          - 甲方因政策变化调整项目方向
+        default_probability: 0.1
+        default_impact: high
+        recommended_mitigations:
+          - 持续关注相关政策动态
+          - 在合同中约定政策变化的处理条款
+          - 架构设计考虑合规扩展性
+      - name_zh: 甲方组织变动
+        typical_signals:
+          - 甲方项目负责人更换
+          - 甲方内部审批流程变更导致响应变慢
+        default_probability: 0.2
+        default_impact: medium
+        recommended_mitigations:
+          - 维护甲方多层级对接关系
+          - 关键决策留存书面记录
+          - 与甲方新负责人快速建立工作关系
