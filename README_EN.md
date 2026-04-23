@@ -5,7 +5,7 @@
 <h1 align="center">Sloth-DeliveryMatrix-Eido</h1>
 
 <p align="center">
-  <strong>AI-Native Delivery Intelligence Agent — A Digital Second Brain for Software Project Teams</strong><br/>
+  <strong>深达 · DeliveryMatrix — AI-Native Delivery Intelligence Agent for Software Project Teams</strong><br/>
   Three-role orchestration + nine atomic capabilities, covering the entire delivery lifecycle
 </p>
 
