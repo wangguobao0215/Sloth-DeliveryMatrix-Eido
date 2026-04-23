@@ -1,6 +1,6 @@
 ---
 name: Sloth-DeliveryMatrix-Eido
-version: 0.1.0
+version: 1.0.0
 description: >-
   AI-native delivery intelligence agent for software project teams. Orchestrates
   9 atomic capabilities (doc-generation, meeting-minutes, risk-radar, progress-tracker,
@@ -15,7 +15,7 @@ description_zh: >-
   原子能力，支持 PM/总监/顾问三种角色视角，内置结构化路由与状态管理。
 ---
 
-# Sloth-DeliveryMatrix-Eido -- PM Commander V0.1
+# Sloth-DeliveryMatrix-Eido -- PM Commander V1.0
 
 > <p align="center"><img src="https://raw.githubusercontent.com/wangguobao0215/Sloth-DeliveryMatrix-Eido/main/assets/qrcode.jpg" width="80" /><br/><sub>扫码关注 <b>树懒老K</b> · 获取更多 AI 技能</sub><br/><i>慢一点，深一度</i></p>
 >

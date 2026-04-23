@@ -16,7 +16,7 @@
 </p>
 
 [![QoderWork Skill](https://img.shields.io/badge/QoderWork-Skill-blue)](https://docs.qoder.com/qoderwork/introduction)
-[![Version](https://img.shields.io/badge/version-0.1.0-green)]()
+[![Version](https://img.shields.io/badge/version-1.0.0-green)]()
 [![License](https://img.shields.io/badge/license-MIT-yellow)](LICENSE)
 
 English | [中文](README.md)
@@ -70,7 +70,7 @@ Sloth-DeliveryMatrix-Eido/
 
 ## Version
 
-Current version: 0.1.0 (Phase 1 Core Verification)
+Current version: 1.0.0
 
 ## License
 

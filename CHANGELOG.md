@@ -2,10 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
-## [0.1.0] - 2026-04-23
+## [1.0.0] - 2026-04-23
 
 ### Added
-- Initial release: Phase 1 MVP
+- Initial release
 - PM Commander role with full routing table (9 routes + 2 composite)
 - Director Commander role with cross-project routing
 - Consultant Commander role with requirement analysis focus
