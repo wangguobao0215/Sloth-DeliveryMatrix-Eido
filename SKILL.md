@@ -511,3 +511,18 @@ Sloth-DeliveryMatrix-Eido 专注于项目交付管理。以下技能覆盖它不
 - 输出模板（通用/政府/SaaS）：`templates/` 目录
 - 自动化脚本（初始化/导出）：`scripts/` 目录
 - 交付方法论与行业知识库：`references/` 目录
+
+
+---
+
+## Hub 集成（可选）
+
+当 EXTEND.md 中 `knowledge_hub.enabled = true` 时，本 Skill 启用中央知识库集成。
+
+详细的结晶点和需求点定义见 `modules/knowledge-hub-bridge.md`。
+
+### 行为变化
+
+1. **知识结晶点**：在指定操作完成后，强制执行知识萃取并写入中央库。
+2. **知识需求点**：在指定操作启动时，强制查询中央库并展示推荐。
+3. 当 `enabled = false` 时，以上行为全部跳过，Skill 独立运行。
